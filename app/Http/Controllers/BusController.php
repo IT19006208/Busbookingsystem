@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class BusController extends Controller
 {
-     //Get Function
+
+    //Get Function
    public function index()
    {
        $bus = bus::all();
@@ -24,7 +25,7 @@ class BusController extends Controller
        }
        else
        {
-           return response()->json(['message'=> 'No Admin Details'], 404);
+           return response()->json(['message'=> 'No Bus Details'], 404);
        }
        
    }
@@ -44,7 +45,7 @@ class BusController extends Controller
        $bus->type = $request->type;
        $bus->vehical_number = $request->vehical_number;		
        $bus->save();
-       return response()->json(['message'=>'Added Successfully'], 200);
+       return response()->json(['message'=>'Bus Added Successfully'], 200);
    }
 
    //Update Function
@@ -63,11 +64,11 @@ class BusController extends Controller
         $bus->type = $request->type;
         $bus->vehical_number = $request->vehical_number;	
            $bus->update();
-           return response()->json(['message'=>'Update Successfully'], 200);
+           return response()->json(['message'=>'Bus Update Successfully'], 200);
        }
        else
        {
-           return response()->json(['message'=>'Not Update Admin Details'], 404);
+           return response()->json(['message'=>'Not Update Bus Details'], 404);
        }
        
    }
@@ -79,11 +80,11 @@ class BusController extends Controller
        if($bus)
        {
            $bus->delete();
-           return response()->json(['message'=>'Delete Successfully'], 200);
+           return response()->json(['message'=>'Bus Delete Successfully'], 200);
        }
        else
        {
-           return response()->json(['message'=>'Not Delete Admin Details'], 404);
+           return response()->json(['message'=>'Not Delete Bus Details'], 404);
        }
    }
 

@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Super_adminsController;
 use App\Http\Controllers\RoutesController;
 use App\Http\Controllers\BusroutesController;
 use App\Http\Controllers\BusController;
@@ -13,15 +12,20 @@ use App\Http\Controllers\API\SuperAdminAuthController;
 use App\Http\Controllers\API\AuthController;
 
 
-
+//----------User Register ----------
 Route::post('User_register', [AuthController::class, 'User_register']);
+
+//----------User Login -------------
 Route::post('User_login', [AuthController::class, 'User_login']);
 
 
+
+//----------User Functionalities----------------
+
 Route::middleware('auth:sanctum')->group(function () {
 
-Route::post('User_logout', [AuthController::class, 'User_logout']);
-    //----------------Bus_schedules------------------------
+
+//----------Bus_schedules----------
 
 //Get API Code
 Route::get('bus_schedules',[Bus_schedulesController::class, 'index']);
@@ -38,7 +42,7 @@ Route::put('bus_schedules/{id}/update',[Bus_schedulesController::class, 'update'
 //Delete API Code
 Route::delete('bus_schedules/{id}/delete',[Bus_schedulesController::class, 'destroy']);
 
-//----------------Bus_schedule_bookings------------------------
+//----------Bus_schedule_bookings----------
 
 //Get API Code
 Route::get('bus_schedule_bookings',[Bus_schedule_bookingsController::class, 'index']);
@@ -55,17 +59,21 @@ Route::put('bus_schedule_bookings/{id}/update',[Bus_schedule_bookingsController:
 //Delete API Code
 Route::delete('bus_schedule_bookings/{id}/delete',[Bus_schedule_bookingsController::class, 'destroy']);
 
+//----------User Logout----------
+Route::post('User_logout', [AuthController::class, 'User_logout']);
+
    
 });
 
 
+//----------Super Admin Register ----------
 Route::post('Super_admin_register', [SuperAdminAuthController::class, 'Super_admin_register']);
+
+//----------Super Admin Login ------------
 Route::post('Super_admin_login', [SuperAdminAuthController::class, 'Super_admin_login']);
 
-
+//----------Super Admin Functionalities----------------
 Route::middleware('auth:sanctum')->group(function () {
-
-Route::post('Super_admin_logout', [SuperAdminAuthController::class, 'Super_admin_logout']);
 
 //----------------Routes------------------------
 
@@ -135,6 +143,9 @@ Route::put('bus_seates/{id}/update',[Bus_seatesController::class, 'update']);
 //Delete API Code
 Route::delete('bus_seates/{id}/delete',[Bus_seatesController::class, 'destroy']);
 
+
+//----------Super Admin Logout ------------
+Route::post('Super_admin_logout', [SuperAdminAuthController::class, 'Super_admin_logout']);
 
 });
 

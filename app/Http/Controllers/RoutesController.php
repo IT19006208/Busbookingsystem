@@ -24,7 +24,7 @@ class RoutesController extends Controller
         }
         else
         {
-            return response()->json(['message'=> 'No Admin Details'], 404);
+            return response()->json(['message'=> 'No Routes Details'], 404);
         }
         
     }
@@ -37,7 +37,7 @@ class RoutesController extends Controller
             'node_two'=>'required|max:191',
             'route_number'=>'required|max:191',
             'distance'=>'required|max:191',
-            'time'=>'required|max:191',
+            'time'=>['required','date_format:H:i','max:191'],
         ]);
   
         $routes = new routes;
@@ -47,7 +47,7 @@ class RoutesController extends Controller
         $routes->distance = $request->distance;	
         $routes->time = $request->time;	
         $routes->save();
-        return response()->json(['message'=>'Added Successfully'], 200);
+        return response()->json(['message'=>' Routes Added Successfully'], 200);
     }
 
     //Update Function
@@ -58,7 +58,7 @@ class RoutesController extends Controller
             'node_two'=>'required|max:191',
             'route_number'=>'required|max:191',
             'distance'=>'required|max:191',
-            'time'=>'required|max:191',
+            'time'=>['required','date_format:H:i','max:191'],
         ]);
   
         $routes = routes::find($id);
@@ -70,11 +70,11 @@ class RoutesController extends Controller
             $routes->distance = $request->distance;	
             $routes->time = $request->time;		
             $routes->update();
-            return response()->json(['message'=>'Update Successfully'], 200);
+            return response()->json(['message'=>'Routes Update Successfully'], 200);
         }
         else
         {
-            return response()->json(['message'=>'Not Update Admin Details'], 404);
+            return response()->json(['message'=>'Not Update Routes Details'], 404);
         }
         
     }
@@ -86,11 +86,11 @@ class RoutesController extends Controller
         if($routes)
         {
             $routes->delete();
-            return response()->json(['message'=>'Delete Successfully'], 200);
+            return response()->json(['message'=>'Routes Delete Successfully'], 200);
         }
         else
         {
-            return response()->json(['message'=>'Not Delete Admin Details'], 404);
+            return response()->json(['message'=>'Not Delete Routes Details'], 404);
         }
     }
 

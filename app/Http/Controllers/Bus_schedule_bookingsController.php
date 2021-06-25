@@ -24,7 +24,7 @@ class Bus_schedule_bookingsController extends Controller
        }
        else
        {
-           return response()->json(['message'=> 'No Admin Details'], 404);
+           return response()->json(['message'=> 'No Bus Schedule Bookings Details'], 404);
        }
        
    }
@@ -36,9 +36,9 @@ class Bus_schedule_bookingsController extends Controller
            'bus_seate_id'=>'required|max:191',
            'user_id'=>'required|max:191',
            'bus_schedule_id'=>'required|max:191',
-           'seat_number'=>'required|max:191',
-           'price'=>'required|max:191',
-           'status'=>'required|max:191',
+           'seat_number'=>'required|numeric|max:191',
+           'price'=>'required|numeric|max:191',
+           'status'=>['required','max:191','regex:(cancel|active)'],
            
        ]);
  
@@ -50,7 +50,7 @@ class Bus_schedule_bookingsController extends Controller
        $bus_schedule_bookings->price = $request->price;	
        $bus_schedule_bookings->status = $request->status;		
        $bus_schedule_bookings->save();
-       return response()->json(['message'=>'Added Successfully'], 200);
+       return response()->json(['message'=>'Bus Schedule Bookings Added Successfully'], 200);
    }
 
    //Update Function
@@ -60,26 +60,28 @@ class Bus_schedule_bookingsController extends Controller
         'bus_seate_id'=>'required|max:191',
            'user_id'=>'required|max:191',
            'bus_schedule_id'=>'required|max:191',
-           'seat_number'=>'required|max:191',
-           'price'=>'required|max:191',
-           'status'=>'required|max:191',
+           'seat_number'=>'required|numeric|max:191',
+           'price'=>'required|numeric|max:191',
+           'status'=>['required','max:191','regex:(cancel|active)'],
        ]);
  
        $bus_schedule_bookings = bus_schedule_bookings::find($id);
        if($bus_schedule_bookings)
        {
+
         $bus_schedule_bookings->bus_seate_id = $request->bus_seate_id;
-       $bus_schedule_bookings->user_id = $request->user_id;
-       $bus_schedule_bookings->bus_schedule_id = $request->bus_schedule_id;	
-       $bus_schedule_bookings->seat_number = $request->seat_number;	
-       $bus_schedule_bookings->price = $request->price;	
-       $bus_schedule_bookings->status = $request->status;
-           $bus_schedule_bookings->update();
-           return response()->json(['message'=>'Update Successfully'], 200);
+        $bus_schedule_bookings->user_id = $request->user_id;
+        $bus_schedule_bookings->bus_schedule_id = $request->bus_schedule_id;	
+        $bus_schedule_bookings->seat_number = $request->seat_number;	
+        $bus_schedule_bookings->price = $request->price;	
+        $bus_schedule_bookings->status = $request->status;
+        $bus_schedule_bookings->update();
+        return response()->json(['message'=>'Bus Schedule Bookings Update Successfully'], 200);
        }
+       
        else
        {
-           return response()->json(['message'=>'Not Update Admin Details'], 404);
+           return response()->json(['message'=>'Not Update Bus Schedule Bookings Details'], 404);
        }
        
    }
@@ -91,11 +93,11 @@ class Bus_schedule_bookingsController extends Controller
        if($bus_schedule_bookings)
        {
            $bus_schedule_bookings->delete();
-           return response()->json(['message'=>'Delete Successfully'], 200);
+           return response()->json(['message'=>' Bus Schedule Bookings Delete Successfully'], 200);
        }
        else
        {
-           return response()->json(['message'=>'Not Delete Admin Details'], 404);
+           return response()->json(['message'=>'Not Delete Bus Schedule Bookings Details'], 404);
        }
    }
 }

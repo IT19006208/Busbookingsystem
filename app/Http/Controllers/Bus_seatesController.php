@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class Bus_seatesController extends Controller
 {
-    //Get Function
+
+   //Get Function
    public function index()
    {
        $bus_seates = bus_seates::all();
@@ -24,7 +25,7 @@ class Bus_seatesController extends Controller
        }
        else
        {
-           return response()->json(['message'=> 'No Admin Details'], 404);
+           return response()->json(['message'=> 'No Bus Seates Details'], 404);
        }
        
    }
@@ -34,8 +35,8 @@ class Bus_seatesController extends Controller
    {
        $request->validate([
            'bus_id'=>'required|max:191',
-           'seat_number'=>'required|max:191',
-           'price'=>'required|max:191',
+           'seat_number'=>'required|numeric|max:191',
+           'price'=>'required|numeric|max:191',
            
        ]);
  
@@ -44,7 +45,7 @@ class Bus_seatesController extends Controller
        $bus_seates->seat_number = $request->seat_number;
        $bus_seates->price = $request->price;		
        $bus_seates->save();
-       return response()->json(['message'=>'Added Successfully'], 200);
+       return response()->json(['message'=>' Bus Seates Added Successfully'], 200);
    }
 
    //Update Function
@@ -52,22 +53,23 @@ class Bus_seatesController extends Controller
    {
        $request->validate([
         'bus_id'=>'required|max:191',
-        'seat_number'=>'required|max:191',
-        'price'=>'required|max:191',
+        'seat_number'=>'required|numeric|max:191',
+        'price'=>'required|numeric|max:191',
        ]);
  
        $bus_seates = bus_seates::find($id);
        if($bus_seates)
        {
-        $bus_seates->bus_id = $request->bus_id;
-        $bus_seates->seat_number = $request->seat_number;
-         $bus_seates->price = $request->price;
-           $bus_seates->update();
-           return response()->json(['message'=>'Update Successfully'], 200);
+          $bus_seates->bus_id = $request->bus_id;
+          $bus_seates->seat_number = $request->seat_number;
+          $bus_seates->price = $request->price;
+          $bus_seates->update();
+          return response()->json(['message'=>'Bus Seates Update Successfully'], 200);
        }
+
        else
        {
-           return response()->json(['message'=>'Not Update Admin Details'], 404);
+           return response()->json(['message'=>'Not Update Bus Seates Details'], 404);
        }
        
    }
@@ -79,11 +81,11 @@ class Bus_seatesController extends Controller
        if($bus_seates)
        {
            $bus_seates->delete();
-           return response()->json(['message'=>'Delete Successfully'], 200);
+           return response()->json(['message'=>'Bus Seates Delete Successfully'], 200);
        }
        else
        {
-           return response()->json(['message'=>'Not Delete Admin Details'], 404);
+           return response()->json(['message'=>'Not Delete Bus Seates Details'], 404);
        }
    }
 }

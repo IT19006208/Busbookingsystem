@@ -24,7 +24,7 @@ class Bus_schedulesController extends Controller
        }
        else
        {
-           return response()->json(['message'=> 'No Admin Details'], 404);
+           return response()->json(['message'=> 'No Bus Schedules Details'], 404);
        }
        
    }
@@ -34,9 +34,9 @@ class Bus_schedulesController extends Controller
    {
        $request->validate([
            'bus_route_id'=>'required|max:191',
-           'direction'=>'required|max:191',
-           'start_timestamp'=>'required|max:191',
-           'end_timestamp'=>'required|max:191',
+           'direction'=>['required','max:191','regex:(forward|revers)'],
+           'start_timestamp'=>['required','date_format:H:i','max:191'],
+           'end_timestamp'=>['required','date_format:H:i','max:191'],
            
        ]);
  
@@ -46,7 +46,7 @@ class Bus_schedulesController extends Controller
        $bus_schedules->start_timestamp = $request->start_timestamp;	
        $bus_schedules->end_timestamp = $request->end_timestamp;		
        $bus_schedules->save();
-       return response()->json(['message'=>'Added Successfully'], 200);
+       return response()->json(['message'=>'Bus Schedules Added Successfully'], 200);
    }
 
    //Update Function
@@ -54,24 +54,26 @@ class Bus_schedulesController extends Controller
    {
        $request->validate([
         'bus_route_id'=>'required|max:191',
-        'direction'=>'required|max:191',
-        'start_timestamp'=>'required|max:191',
-        'end_timestamp'=>'required|max:191',
+        'direction'=>['required','max:191','regex:(forward|revers)'],
+        'start_timestamp'=>['required','date_format:H:i','max:191'],
+           'end_timestamp'=>['required','date_format:H:i','max:191'],
        ]);
  
        $bus_schedules = bus_schedules::find($id);
        if($bus_schedules)
        {
-        $bus_schedules->bus_route_id = $request->bus_route_id;
-       $bus_schedules->direction = $request->direction;
-       $bus_schedules->start_timestamp = $request->start_timestamp;	
-       $bus_schedules->end_timestamp = $request->end_timestamp;	
-           $bus_schedules->update();
-           return response()->json(['message'=>'Update Successfully'], 200);
+
+         $bus_schedules->bus_route_id = $request->bus_route_id;
+         $bus_schedules->direction = $request->direction;
+         $bus_schedules->start_timestamp = $request->start_timestamp;	
+         $bus_schedules->end_timestamp = $request->end_timestamp;	
+         $bus_schedules->update();
+         return response()->json(['message'=>'Bus Schedules Update Successfully'], 200);
+
        }
        else
        {
-           return response()->json(['message'=>'Not Update Admin Details'], 404);
+           return response()->json(['message'=>'Not Update Bus Schedules Details'], 404);
        }
        
    }
@@ -83,11 +85,11 @@ class Bus_schedulesController extends Controller
        if($bus_schedules)
        {
            $bus_schedules->delete();
-           return response()->json(['message'=>'Delete Successfully'], 200);
+           return response()->json(['message'=>'Bus Schedules Delete Successfully'], 200);
        }
        else
        {
-           return response()->json(['message'=>'Not Delete Admin Details'], 404);
+           return response()->json(['message'=>'Not Delete Bus Schedules Details'], 404);
        }
    }
 }

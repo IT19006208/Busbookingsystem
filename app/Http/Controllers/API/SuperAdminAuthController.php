@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class SuperAdminAuthController extends Controller
 {
+    //Super Admin Register Function
     public function Super_admin_register(Request $request)
     {
         
         $data = $request->validate([
             'name'=>'required|string|max:191',
             'email'=>'required|email|max:191|unique:super_admins,email',
-            'password'=>'required|string',
+            'password'=>['required','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!%*#?&]/',],
         ]);
 
         $super_admins = super_admins::create([
@@ -24,28 +25,30 @@ class SuperAdminAuthController extends Controller
             'password'=> Hash::make($data['password']),
         ]);
 
-        $token = $super_admins->createToken('BusBookingSystemProjectToken')->plainTextToken;
+        //$token = $super_admins->createToken('BusBookingSystemProjectToken')->plainTextToken;
 
         $response = [
             'user'=>$super_admins,
-            'token'=>$token,
+            //'token'=>$token,
         ];
 
         return response($response, 201);
 
     }
-   
+
+    //Super Admin Logout Function
     public function Super_admin_logout()
     {
         auth()->user()->tokens()->delete();
         return response(['message'=>'Logged Out Successfully.']);
     }
 
+    //Super Admin Login Function
     public function Super_admin_login(Request $request)
     {
         $data = $request->validate([
             'email'=>'required|email|max:191',
-            'password'=>'required|string',
+            'password'=>['required','string','min:8','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!%*#?&]/',],
         ]);
 
         $super_admins = super_admins::where('email', $data['email'])->first();
