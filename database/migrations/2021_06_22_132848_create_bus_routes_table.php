@@ -15,10 +15,15 @@ class CreateBusRoutesTable extends Migration
     {
         Schema::create('bus_routes', function (Blueprint $table) {
             $table->id();
-            $table->string('bus_id');
-            $table->string('route_id');
+            $table->unsignedBigInteger('bus_id')->index();
+            $table->unsignedBigInteger('route_id')->index();
             $table->string('status');
+
+            $table->foreign('bus_id')->references('id')->on('bus')->onDelete('cascade');
+            $table->foreign('route_id')->references('id')->on('routes')->onDelete('cascade');
             $table->timestamps();
+
+           
         });
     }
 

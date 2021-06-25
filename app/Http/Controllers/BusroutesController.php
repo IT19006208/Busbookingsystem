@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\bus_routes;
+use App\bus;
+use App\routes;
 use Illuminate\Http\Request;
 
 class BusroutesController extends Controller
@@ -33,25 +35,55 @@ class BusroutesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'bus_id'=>'required|max:191',
-            'route_id'=>'required|max:191',
+            'bus_id'=>'required',
+            'route_id'=>'required',
             'status'=>['required','max:191','regex:(active|blocked)'],
         ]);
-  
+
+        //Get Bus Foreign Key
+        $BID=$request->bus_id;
+        $bus=bus::find($BID);
+
+        ////Get Route Foreign Key
+        $RID=$request->route_id;
+        $routes=routes::find($RID);
+
         $bus_routes = new bus_routes;
-        $bus_routes->bus_id = $request->bus_id;
-        $bus_routes->route_id = $request->route_id;
-        $bus_routes->status = $request->status;	
-        $bus_routes->save();
-        return response()->json(['message'=>' Bus Routes Added Successfully'], 200);
+        
+        if($bus)
+
+        {
+
+            if($routes){  
+
+               $bus_routes->bus_id = $request->bus_id;
+               $bus_routes->route_id = $request->route_id;
+               $bus_routes->status = $request->status;	
+               $bus_routes->save();
+               return response()->json(['message'=>' Bus Routes Added Successfully'], 200);
+       }
+
+       else{
+
+        return response()->json(['message'=>' Route ID Not Found'], 404);
+
+         }
+    }
+
+       else
+        {
+            return response()->json(['message'=>' Bus ID Not Found'], 404);
+        }
+       
+
     }
 
     //Update Function
     public function update(Request $request, $id)
     {
         $request->validate([
-            'bus_id'=>'required|max:191',
-            'route_id'=>'required|max:191',
+            'bus_id'=>'required',
+            'route_id'=>'required',
             'status'=>['required','max:191','regex:(active|blocked)'],
         ]);
   

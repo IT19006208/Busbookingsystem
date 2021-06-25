@@ -36,7 +36,7 @@ class BusController extends Controller
        $request->validate([
            'name'=>'required|max:191',
            'type'=>'required|max:191',
-           'vehical_number'=>'required|max:191',
+           'vehical_number'=>'required|max:12',
            
        ]);
  
@@ -52,9 +52,9 @@ class BusController extends Controller
    public function update(Request $request, $id)
    {
        $request->validate([
-        'name'=>'required|max:191',
+           'name'=>'required|max:191',
            'type'=>'required|max:191',
-           'vehical_number'=>'required|max:191',
+           'vehical_number'=>'required|max:12',
        ]);
  
        $bus = bus::find($id);

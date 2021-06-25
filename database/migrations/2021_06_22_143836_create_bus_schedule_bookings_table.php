@@ -15,12 +15,16 @@ class CreateBusScheduleBookingsTable extends Migration
     {
         Schema::create('bus_schedule_bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('bus_seate_id');
-            $table->string('user_id');
-            $table->string('bus_schedule_id');
+            $table->unsignedBigInteger('bus_seate_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('bus_schedule_id')->index();
             $table->string('seat_number');
             $table->string('price');
             $table->string('status');
+
+            $table->foreign('bus_seate_id')->references('id')->on('bus_seates')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('bus_schedule_id')->references('id')->on('bus_schedules')->onDelete('cascade');
             $table->timestamps();
         });
     }

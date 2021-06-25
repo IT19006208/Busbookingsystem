@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\bus_schedules;
+use App\routes;
 use Illuminate\Http\Request;
 
 class Bus_schedulesController extends Controller
@@ -33,27 +34,41 @@ class Bus_schedulesController extends Controller
    public function store(Request $request)
    {
        $request->validate([
-           'bus_route_id'=>'required|max:191',
+           'bus_route_id'=>'required',
            'direction'=>['required','max:191','regex:(forward|revers)'],
            'start_timestamp'=>['required','date_format:H:i','max:191'],
            'end_timestamp'=>['required','date_format:H:i','max:191'],
            
        ]);
- 
+
+       //Get Route Foreign Key
+       $RID=$request->bus_route_id;
+       $routes=routes::find($RID);
+
        $bus_schedules = new bus_schedules;
+       if($routes){
+
+      
        $bus_schedules->bus_route_id = $request->bus_route_id;
        $bus_schedules->direction = $request->direction;
        $bus_schedules->start_timestamp = $request->start_timestamp;	
        $bus_schedules->end_timestamp = $request->end_timestamp;		
        $bus_schedules->save();
        return response()->json(['message'=>'Bus Schedules Added Successfully'], 200);
+       }
+
+       else{
+
+        return response()->json(['message'=>' Route ID Not Found'], 404);
+
+         }
    }
 
    //Update Function
    public function update(Request $request, $id)
    {
        $request->validate([
-        'bus_route_id'=>'required|max:191',
+        'bus_route_id'=>'required',
         'direction'=>['required','max:191','regex:(forward|revers)'],
         'start_timestamp'=>['required','date_format:H:i','max:191'],
            'end_timestamp'=>['required','date_format:H:i','max:191'],

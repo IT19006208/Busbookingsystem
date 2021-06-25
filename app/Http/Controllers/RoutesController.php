@@ -35,7 +35,7 @@ class RoutesController extends Controller
         $request->validate([
             'node_one'=>'required|max:191',
             'node_two'=>'required|max:191',
-            'route_number'=>'required|max:191',
+            'route_number'=>'required',
             'distance'=>'required|max:191',
             'time'=>['required','date_format:H:i','max:191'],
         ]);
@@ -56,7 +56,7 @@ class RoutesController extends Controller
         $request->validate([
             'node_one'=>'required|max:191',
             'node_two'=>'required|max:191',
-            'route_number'=>'required|max:191',
+            'route_number'=>'required',
             'distance'=>'required|max:191',
             'time'=>['required','date_format:H:i','max:191'],
         ]);
